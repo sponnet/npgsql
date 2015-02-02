@@ -741,16 +741,16 @@ namespace Npgsql
         /// <typeparam name="TResult">The type of the result returned by the task.</typeparam>
         /// <param name="result">The result to store into the completed task.</param>
         /// <returns>The successfully completed task.</returns>
-#if NET45
+//#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+//#endif
         internal static Task<TResult> TaskFromResult<TResult>(TResult result)
         {
-#if NET45
+//#if NET45
             return Task.FromResult(result);
-#else
-            return TaskEx.FromResult(result);
-#endif
+//#else
+//            return TaskEx.FromResult(result);
+//#endif
         }
 
         /// <summary>

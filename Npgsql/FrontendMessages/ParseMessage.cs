@@ -110,7 +110,6 @@ namespace Npgsql.FrontendMessages
                     foreach (var t in ParameterTypeOIDs) {
                         buf.WriteInt32((int)t);
                     }
-
                     _state = State.WroteAll;
                     return true;
 

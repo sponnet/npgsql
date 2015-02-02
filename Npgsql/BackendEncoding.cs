@@ -26,7 +26,9 @@
 
 using System;
 using System.Text;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Npgsql.EntityFramework")]
 namespace Npgsql
 {
     /// <summary>

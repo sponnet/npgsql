@@ -149,36 +149,38 @@ namespace Npgsql.FrontendMessages
                 }
 
                 var handler = param.Handler;
-                if (param.FormatCode == FormatCode.Text)
+                if ( param.FormatCode == FormatCode.Text )
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException();          // SVB : in commentaar gezet voor insert van TimeStamp. Deze gaf param.FormatCode = Text terwijl de insert een binaryWrite moet zijn
                 }
 
-                if (handler.IsChunking)
+                if ( handler.IsChunking )
                 {
-                    if (!_wroteParamLen)
+                    if ( !_wroteParamLen )
                     {
-                        if (buf.WriteSpaceLeft < 4) {
+                        if ( buf.WriteSpaceLeft < 4 )
+                        {
                             return false;
                         }
                         buf.WriteInt32(param.BoundSize);
                         handler.PrepareChunkedWrite(param.Value);
                         _wroteParamLen = true;
                     }
-                    if (!handler.WriteBinaryChunk(buf, out directBuf)) {
+                    if ( !handler.WriteBinaryChunk(buf, out directBuf) )
+                    {
                         return false;
                     }
                     _wroteParamLen = false;
                 }
                 else
                 {
-                    if (buf.WriteSpaceLeft < param.BoundSize + 4)
+                    if ( buf.WriteSpaceLeft < param.BoundSize + 4 )
                     {
                         Contract.Assume(buf.Size < param.BoundSize + 4);
                         return false;
                     }
                     buf.WriteInt32(param.BoundSize);
-                    param.Handler.WriteBinary(param.Value, buf);                    
+                    param.Handler.WriteBinary(param.Value, buf);
                 }
             }
             return true;

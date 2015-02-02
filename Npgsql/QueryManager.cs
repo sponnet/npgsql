@@ -39,9 +39,9 @@ namespace Npgsql
                 .Flush();
         }
 
-#if NET45
+//#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+//#endif
         internal static void WriteQuery(NpgsqlBuffer buffer, byte[] query)
         {
             var len = 4 + query.Length;

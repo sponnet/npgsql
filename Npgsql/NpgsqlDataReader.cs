@@ -900,11 +900,11 @@ namespace Npgsql
             return handler.GetBytes(row, (int)dataOffset, buffer, bufferOffset, length, fieldDescription);
         }
 
-#if NET45
+//#if NET45
         public override Stream GetStream(int ordinal)
-#else
-        public Stream GetStream(int ordinal)
-#endif
+//#else
+//        public Stream GetStream(int ordinal)
+//#endif
         {
             #region Contracts
             if (!IsOnRow)
@@ -970,11 +970,11 @@ namespace Npgsql
             return handler.GetChars(row, (int)dataOffset, buffer, bufferOffset, length, fieldDescription);
         }
 
-#if NET45
+//#if NET45
         public override TextReader GetTextReader(int ordinal)
-#else
-        public TextReader GetTextReader(int ordinal)
-#endif
+//#else
+//        public TextReader GetTextReader(int ordinal)
+//#endif
         {
             #region Contracts
             if (!IsOnRow)
@@ -1134,11 +1134,11 @@ namespace Npgsql
             return result;
         }
 
-#if NET45
+//#if NET45
         public override T GetFieldValue<T>(int ordinal)
-#else
-        public T GetFieldValue<T>(int ordinal)
-#endif
+//#else
+//        public T GetFieldValue<T>(int ordinal)
+//#endif
         {
             #region Contracts
             if (!IsOnRow)
@@ -1309,14 +1309,20 @@ namespace Npgsql
             }
         }
 
-#if NET45
+//#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+//#endif
         T ReadColumnWithoutCache<T>(int ordinal)
         {
             _row.SeekToColumnStart(ordinal);
             Row.CheckNotNull();
             var fieldDescription = _rowDescription[ordinal];
+
+            // SVB : in principe zou er altijd naar object moeten kunnen gecast worden
+            //if ( typeof(T) == typeof(object) )
+            //{
+
+            //}
 
             var handler = fieldDescription.Handler as ITypeHandler<T>;
             if (handler == null) {
@@ -1334,9 +1340,9 @@ namespace Npgsql
             return result;
         }
 
-#if NET45
+//#if NET45
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
+//#endif
         T ReadColumn<T>(int ordinal)
         {
             CachedValue<T> cache = null;

@@ -16,7 +16,7 @@ namespace Npgsql.TypeHandlers.NumericHandlers
     internal class NumericHandler : TypeHandler<decimal>,
         ITypeHandler<byte>, ITypeHandler<short>, ITypeHandler<int>, ITypeHandler<long>,
         ITypeHandler<float>, ITypeHandler<double>,
-        ITypeHandler<string>
+        ITypeHandler<string>, ITypeHandler<object>
     {
         public override bool SupportsBinaryWrite { get { return false; } }
 
@@ -67,5 +67,14 @@ namespace Npgsql.TypeHandlers.NumericHandlers
         {
             return Read(buf, fieldDescription, len).ToString();
         }
+
+        // SVB //
+
+        object ITypeHandler<object>.Read(NpgsqlBuffer buf, FieldDescription fieldDescription, int len)
+        {
+            return (object)Read(buf, fieldDescription, len);
+        }
+
+        // SVB //
     }
 }
